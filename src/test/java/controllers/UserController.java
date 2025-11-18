@@ -4,24 +4,23 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import models.User;
 
-import static constants.CommonConstants.BASE_URI;
+import static constants.CommonConstants.BASE_URI1;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
 public class UserController {
     RequestSpecification requestSpecification;
-//    private static final String BASE_URI = "https://petstore.swagger.io/v2/";
     private static final String USER_ENDPOINT = "user";
 
     public UserController() {
         this.requestSpecification = given()
                 .accept(JSON)
                 .contentType(JSON)
-                .baseUri(BASE_URI);
+                .baseUri(BASE_URI1);
     }
 
     public Response createDefaultedUser(User user) {
-        return given(this.requestSpecification)
+        return given(requestSpecification)
                 .body(user)
                 .when()
                 .post(USER_ENDPOINT)

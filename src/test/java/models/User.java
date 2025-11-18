@@ -4,18 +4,20 @@ package models;
 //import lombok.Builder;
 //import lombok.Data;
 
+import java.util.Objects;
+
 //@Data
 //@AllArgsConstructor
 //@Builder
 public class User {
     private double id;
     private String username;
-    private String firsName;
-    private String lastName;
-    private String email;
-    private String password;
-    private String phone;
-    private int userStatus;
+    private final String firsName;
+    private final String lastName;
+    private final String email;
+    private final String password;
+    private final String phone;
+    private final int userStatus;
 
     public User(double id, String username, String firsName, String lastName, String email, String password, String phone, int userStatus) {
         this.id = id;
@@ -30,6 +32,18 @@ public class User {
 
     public double getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Double.compare(id, user.id) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     public String getUsername() {
