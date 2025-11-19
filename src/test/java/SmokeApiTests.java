@@ -1,15 +1,14 @@
 import controllers.UserController;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import models.ApiResponse;
-import models.User;
+import models.response.ApiResponse;
+import models.request.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static testdata.TestData.DEFAULT_USER;
-import static testdata.TestData.INVALID_USER;
+import static testdata.UserData.DEFAULT_USER;
+import static testdata.UserData.INVALID_USER;
 
 public class SmokeApiTests {
     private UserController userController;

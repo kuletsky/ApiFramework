@@ -1,4 +1,4 @@
-package models;
+package models.response;
 
 public class ApiResponse {
     private int code;

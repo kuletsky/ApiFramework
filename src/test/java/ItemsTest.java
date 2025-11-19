@@ -7,6 +7,8 @@ import utils.Utils;
 
 import static constants.CommonConstants.BASE_URI;
 import static io.restassured.RestAssured.given;
+import static testdata.TestData.VALID_ITEM;
+import static testdata.TestData.VALID_ITEM_REQUEST;
 
 public class ItemsTest {
     private static String token;
@@ -53,9 +55,15 @@ public class ItemsTest {
     }
 
     @Test
-    void newItem() {
+    void addNewItem() {
+        System.out.println("POST " + token);
+
+
         Response response = new ItemController()
-                .addItem("0037099942", 1, token);
+//                .addItem("0037099942", 1, token)
+                .addItem(VALID_ITEM_REQUEST, token);
+
+        System.out.println(VALID_ITEM_REQUEST);
 
         Assertions.assertEquals(202, response.statusCode());
         Assertions.assertNotNull(response.jsonPath().getString("cartId"));

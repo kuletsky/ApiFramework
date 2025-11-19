@@ -1,23 +1,27 @@
 package testdata;
 
-import models.User;
+import models.request.ItemList;
+import models.request.OrderItem;
+import models.request.OrderItemsRequest;
+import models.request.User;
+
+import java.util.List;
 
 public class TestData {
-    public static final User DEFAULT_USER = new User(0,
-            "username",
-            "firstName",
-            "lastName",
-            "email",
-            "password",
-            "phone",
-            0);
 
-    public static final User INVALID_USER = new User(0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            0);
+    public static final List<ItemList.Item> VALID_ITEM = List.of(
+            new ItemList.Item(
+                    "0037099942",
+                    1)
+    );
+
+    public static final OrderItemsRequest VALID_ITEM_REQUEST =
+            OrderItemsRequest.builder()
+                    .items(List.of(
+                            OrderItem.builder()
+                                    .skuId("0037099942")
+                                    .quantity(1)
+                                    .build()
+                    ))
+                    .build();
 }

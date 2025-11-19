@@ -2,7 +2,7 @@ package controllers;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import models.User;
+import models.request.User;
 
 import static constants.CommonConstants.BASE_URI1;
 import static io.restassured.RestAssured.given;
