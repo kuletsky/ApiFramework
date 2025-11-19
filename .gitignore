@@ -41,3 +41,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/logs/browserstack-plugin.log
+/.idea/gradle.xml
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+/gradlew
+/gradlew.bat
+/.idea/misc.xml
+/settings.gradle
+/.idea/vcs.xml
