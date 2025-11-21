@@ -22,10 +22,10 @@ public class Utils {
                 .andReturn();
 
 
-        System.out.println("Status: " + response.statusCode());
+//        System.out.println("Status: " + response.statusCode());
 
         String accessToken = response.jsonPath().getString("access_token");
-        System.out.println("Token: " + accessToken);
+//        System.out.println("Token: " + accessToken);
 
         return "Bearer " + response.jsonPath().getString("access_token");
     }

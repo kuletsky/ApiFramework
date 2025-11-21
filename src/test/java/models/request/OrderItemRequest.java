@@ -3,10 +3,10 @@ package models.request;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderItemsRequest {
-    private List<OrderItem> items;
+public class OrderItemRequest {
+    private final List<OrderItem> items;
 
-    private OrderItemsRequest(Builder builder) {
+    private OrderItemRequest(Builder builder) {
         // defensive copy
         this.items = List.copyOf(builder.items);
     }
@@ -34,8 +34,8 @@ public class OrderItemsRequest {
             return this;
         }
 
-        public OrderItemsRequest build() {
-            return new OrderItemsRequest(this);
+        public OrderItemRequest build() {
+            return new OrderItemRequest(this);
         }
     }
 }
