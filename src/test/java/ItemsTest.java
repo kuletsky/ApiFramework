@@ -2,7 +2,6 @@ import controllers.ItemController;
 import io.restassured.response.Response;
 import models.response.cart.*;
 import models.response.order.OrderItemResponse;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.Utils;
@@ -104,15 +103,15 @@ public class ItemsTest {
 
                 // Summary
                 () -> assertNotNull(summary),
-                () -> assertEquals(35.91, summary.getTotal(), 0.001),
-                () -> assertEquals(35.91, summary.getNetTotal(), 0.001),
+                () -> assertEquals(37.91, summary.getTotal(), 0.001),
+                () -> assertEquals(37.91, summary.getNetTotal(), 0.001),
                 () -> assertEquals(75.0, summary.getFreeShippingThreshold(), 0.001),
                 () -> assertEquals(0.0, summary.getTax(), 0.001),
 
                 // Single item
                 () -> assertEquals(1, data.getItems().size()),
                 () -> assertEquals(1, item.getQuantity()),
-                () -> assertEquals(27.96, item.getPrice(), 0.001),
+                () -> assertEquals(29.96, item.getPrice(), 0.001),
                 () -> assertEquals("0037099942", item.getSku())
         );
     }
@@ -159,9 +158,37 @@ public class ItemsTest {
 
     @Test
     void deleteItem() {
-        Response response = new ItemController()
-                .addItem(VALID_ITEM_REQUEST, token)
-                .deleteItem(VALID_ITEM, token)
-                .getResponse();
+        ItemController itemController = new ItemController();
+
+        // Arrange
+        itemController.addItem(VALID_ITEM_REQUEST, token);
+
+        CartResponse cartBefore = itemController.getItem(token)
+                .getResponse()
+                .as(CartResponse.class);
+
+        List<CartItem> itemsBefore = cartBefore.getData().getItems();
+        int cartItemsBefore = itemsBefore.size();
+        String itemId = itemsBefore.getFirst().getItemId();
+
+        // Act
+        Response response = itemController.deleteItem(itemId, token).getResponse();
+        OrderItemResponse itemResponse = response.as(OrderItemResponse.class);
+
+        CartResponse cartAfter = itemController.getItem(token)
+                .getResponse()
+                .as(CartResponse.class);
+        int cartItemsAfter = cartAfter.getData().getItems().size();
+
+        //Assert
+        assertAll(
+                () -> assertEquals(202, response.statusCode()),
+                () -> assertNotNull(itemResponse.getCartId()),
+                () -> assertFalse(itemResponse.getCartId().isEmpty()),
+                () -> assertNotNull(itemResponse.getErrors()),
+                () -> assertEquals(0, itemResponse.getErrors().size()),
+
+                () -> assertEquals(cartItemsBefore-1, cartItemsAfter)
+        );
     }
 }

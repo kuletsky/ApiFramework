@@ -54,9 +54,7 @@ public class ItemController extends BaseController {
         OrderItemRequest request = OrderItemRequest.builder()
                 .items(List.of(
                         OrderItem.builder()
-                                .skuId(sku)
                                 .itemId(itemId)
-                                .quantity(qty)
                                 .build()
                 ))
                 .build();
@@ -65,7 +63,26 @@ public class ItemController extends BaseController {
                 .spec(spec)
                 .header("authorization", token)
                 .body(request)
-                .patch("bag/v1/items")
+                .patch("bag/v1/items?itemIds=" + itemId)
+                .andReturn();
+
+        return this;
+    }
+
+    public ItemController deleteItem(String itemId, String token) {
+        OrderItemRequest request = OrderItemRequest.builder()
+                .items(List.of(
+                        OrderItem.builder()
+                                .itemId(itemId)
+                                .build()
+                ))
+                .build();
+
+        response = given()
+                .spec(spec)
+                .header("authorization", token)
+//                .body(request)
+                .delete("bag/v1/items?itemIds=" + itemId)
                 .andReturn();
 
         return this;
